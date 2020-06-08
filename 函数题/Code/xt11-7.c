@@ -1,21 +1,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct ListNode {
+struct ListNode
+{
     int data;
     struct ListNode *next;
 };
 
 struct ListNode *readlist();
-struct ListNode *getodd( struct ListNode **L );
-void printlist( struct ListNode *L )
+struct ListNode *getodd(struct ListNode **L);
+void printlist(struct ListNode *L)
 {
-     struct ListNode *p = L;
-     while (p) {
-           printf("%d ", p->data);
-           p = p->next;
-     }
-     printf("\n");
+    struct ListNode *p = L;
+    while (p)
+    {
+        printf("%d ", p->data);
+        p = p->next;
+    }
+    printf("\n");
 }
 
 int main()
@@ -31,21 +33,72 @@ int main()
 
 struct ListNode *readlist()
 {
-    int s;
-    struct ListNode *l,*res;
-    s = scanf("%d",&s);
-    l->data=s;
-    l->next=NULL;
-    res = l;
-    while (scanf("%d",&s)&&s!=-1)
+    int data;
+    struct ListNode *head = NULL;
+    struct ListNode *p;
+    while (scanf("%d", &data) && data != -1)
     {
-        struct ListNode tmp = {.data=s,.next=NULL};
-        l->next=&tmp;
-        l++;
+        struct ListNode *q = (struct ListNode *)malloc(sizeof(struct ListNode));
+        if (q != NULL)
+        {
+            q->data = data;
+            q->next = NULL;
+        }
+        else
+            exit(1);
+        if (head != NULL)
+        {
+            p->next = q;
+        }
+        else
+            head = q;
+        p = q;
     }
-    return res;
+    return head;
 }
-struct ListNode *getodd( struct ListNode **L )
+struct ListNode *getodd(struct ListNode **L)
 {
-    
+    struct ListNode *head0 = NULL, *head1 = NULL, *p0, *p1;
+    while ((*L) != NULL)
+    {
+        int data = (*L)->data;
+        struct ListNode *q = (struct ListNode *)malloc(sizeof(struct ListNode));
+        if (data % 2)
+        {
+            if (q != NULL)
+            {
+                q->data = data;
+                q->next = NULL;
+            }
+            else
+                exit(1);
+            if (head1 != NULL)
+            {
+                p1->next = q;
+            }
+            else
+                head1 = q;
+            p1 = q;
+        }
+        else
+        {
+            if (q != NULL)
+            {
+                q->data = data;
+                q->next = NULL;
+            }
+            else
+                exit(1);
+            if (head0 != NULL)
+            {
+                p0->next = q;
+            }
+            else
+                head0 = q;
+            p0 = q;
+        }
+        *L = (*L)->next;
+    }
+    *L = head0;
+    return head1;
 }
