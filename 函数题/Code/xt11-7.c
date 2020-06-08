@@ -22,11 +22,30 @@ int main()
 {
     struct ListNode *L, *Odd;
     L = readlist();
-    Odd = getodd(&L);
-    printlist(Odd);
+    // Odd = getodd(&L);
+    // printlist(Odd);
     printlist(L);
 
     return 0;
 }
 
-/* 你的代码将被嵌在这里 */
+struct ListNode *readlist()
+{
+    int s;
+    struct ListNode *l,*res;
+    s = scanf("%d",&s);
+    l->data=s;
+    l->next=NULL;
+    res = l;
+    while (scanf("%d",&s)&&s!=-1)
+    {
+        struct ListNode tmp = {.data=s,.next=NULL};
+        l->next=&tmp;
+        l++;
+    }
+    return res;
+}
+struct ListNode *getodd( struct ListNode **L )
+{
+    
+}
