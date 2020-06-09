@@ -62,22 +62,25 @@ struct ListNode *deletem(struct ListNode *L, int m)
     {
         if (L->data == m)
         {
-            if (L - 1)
-            { //中间断开
-                (L - 1)->next = (L + 1);
-                tmp = L + 1;
-                free(L);
-                L = tmp;
-            }
-            else
+            if (L == res)
             { //前部往后走
                 tmp = L + 1;
+                L->next = NULL;
                 free(L);
                 L = tmp;
                 res = L;
             }
+            else
+            { //中间断开
+                (L - 1)->next = (L + 1);
+                tmp = L + 1;
+                L->next = NULL;
+                free(L);
+                L = tmp;
+            }
         }
-        L++;
+        else
+            L++;
     }
     return res;
 }
