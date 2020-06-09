@@ -38,6 +38,7 @@ struct ListNode *readlist()
     struct ListNode *p;
     while (scanf("%d", &data) && data != -1)
     {
+        //分配当前的链表节点
         struct ListNode *q = (struct ListNode *)malloc(sizeof(struct ListNode));
         if (q != NULL)
         {
