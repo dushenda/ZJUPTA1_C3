@@ -56,6 +56,7 @@ struct ListNode *readlist()
     }
     return head;
 }
+
 struct ListNode *getodd(struct ListNode **L)
 {
     struct ListNode *head0 = NULL, *head1 = NULL, *p0, *p1;
