@@ -24,10 +24,9 @@ int main()
 {
     struct ListNode *L, *Odd;
     L = readlist();
-    // Odd = getodd(&L);
-    // printlist(Odd);
+    Odd = getodd(&L);
+    printlist(Odd);
     printlist(L);
-
     return 0;
 }
 
@@ -40,17 +39,10 @@ struct ListNode *readlist()
     {
         //分配当前的链表节点
         struct ListNode *q = (struct ListNode *)malloc(sizeof(struct ListNode));
-        if (q != NULL)
-        {
-            q->data = data;
-            q->next = NULL;
-        }
-        else
-            exit(1);
+        q->data = data;
+        q->next = NULL;
         if (head != NULL)
-        {
             p->next = q;
-        }
         else
             head = q;
         p = q;
@@ -66,18 +58,11 @@ struct ListNode *getodd(struct ListNode **L)
         int data = (*L)->data;
         struct ListNode *q = (struct ListNode *)malloc(sizeof(struct ListNode));
         if (data % 2)
-        {
-            if (q != NULL)
-            {
-                q->data = data;
-                q->next = NULL;
-            }
-            else
-                exit(1);
+        {//奇数
+            q->data = data;
+            q->next = NULL;
             if (head1 != NULL)
-            {
                 p1->next = q;
-            }
             else
                 head1 = q;
             p1 = q;
@@ -104,3 +89,5 @@ struct ListNode *getodd(struct ListNode **L)
     *L = head0;
     return head1;
 }
+//test
+//1 2 2 3 4 5 6 7 -1
