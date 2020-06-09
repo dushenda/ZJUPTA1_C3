@@ -1,27 +1,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct ListNode
-{
+struct ListNode {
     int data;
     struct ListNode *next;
 };
 
 struct ListNode *readlist();
+
 struct ListNode *deletem(struct ListNode *L, int m);
-void printlist(struct ListNode *L)
-{
+
+void printlist(struct ListNode *L) {
     struct ListNode *p = L;
-    while (p)
-    {
+    while (p) {
         printf("%d ", p->data);
         p = p->next;
     }
     printf("\n");
 }
 
-int main()
-{
+int main() {
     int m;
     struct ListNode *L = readlist();
     scanf("%d", &m);
@@ -31,22 +29,17 @@ int main()
     return 0;
 }
 
-struct ListNode *readlist()
-{
+struct ListNode *readlist() {
     int in;
     struct ListNode *head = NULL, *tmp_pre = NULL;
-    while (scanf("%d", &in) && in != -1)
-    {
-        struct ListNode *tmp_next = (struct ListNode *)malloc(sizeof(struct ListNode));
+    while (scanf("%d", &in) && in != -1) {
+        struct ListNode *tmp_next = (struct ListNode *) malloc(sizeof(struct ListNode));
         tmp_next->data = in;
         tmp_next->next = NULL;
-        if (!head)
-        {
+        if (!head) {
             head = tmp_next;
             tmp_pre = tmp_next;
-        }
-        else
-        {
+        } else {
             tmp_pre->next = tmp_next;
             tmp_pre = tmp_next;
         }
@@ -54,33 +47,32 @@ struct ListNode *readlist()
     return head;
 }
 
-struct ListNode *deletem(struct ListNode *L, int m)
-{
+struct ListNode *deletem(struct ListNode *L, int m) {
     struct ListNode *res = L;
-    struct ListNode *tmp = NULL;
-    while (!L)
-    {
-        if (L->data == m)
-        {
-            if (L == res)
-            { //前部往后走
-                tmp = L + 1;
-                L->next = NULL;
+    struct ListNode *tmp_pre = NULL, *tmp_now = NULL;
+    while (L->next != NULL) {
+        if (L->data == m) {
+            if (L == res) { //前部往后走
+                res = L->next;
                 free(L);
-                L = tmp;
-                res = L;
-            }
-            else
-            { //中间断开
-                (L - 1)->next = (L + 1);
-                tmp = L + 1;
-                L->next = NULL;
+                L = res;
+                tmp_pre = res;
+            } else { //中间断开
+                tmp_now = L->next;
+                tmp_pre->next = tmp_now;
                 free(L);
-                L = tmp;
+                L = tmp_now;
             }
+        } else {
+            tmp_pre = L;
+            L = L->next;
         }
-        else
-            L++;
     }
+    if (L->data == m) {
+        tmp_pre->next = NULL;
+        free(L);
+    }
+    if (L==tmp_pre)
+        return NULL;
     return res;
 }
