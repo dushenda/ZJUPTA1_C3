@@ -32,62 +32,72 @@ int main()
 
 struct ListNode *readlist()
 {
-    int data;
-    struct ListNode *head = NULL;
-    struct ListNode *p;
-    while (scanf("%d", &data) && data != -1)
+    int input;
+    struct ListNode *res = NULL, *tmp_pre = NULL;
+    while (scanf("%d", &input) && input != -1)
     {
-        //分配当前的链表节点
-        struct ListNode *q = (struct ListNode *)malloc(sizeof(struct ListNode));
-        q->data = data;
-        q->next = NULL;
-        if (head != NULL)
-            p->next = q;
-        else
-            head = q;
-        p = q;
-    }
-    return head;
-}
-
-struct ListNode *getodd(struct ListNode **L)
-{
-    struct ListNode *head0 = NULL, *head1 = NULL, *p0, *p1;
-    while ((*L) != NULL)
-    {
-        int data = (*L)->data;
-        struct ListNode *q = (struct ListNode *)malloc(sizeof(struct ListNode));
-        if (data % 2)
-        {//奇数
-            q->data = data;
-            q->next = NULL;
-            if (head1 != NULL)
-                p1->next = q;
-            else
-                head1 = q;
-            p1 = q;
+        struct ListNode *tmp = (struct ListNode *)malloc(sizeof(struct ListNode));
+        if (!res)
+        {
+            tmp->data = input;
+            tmp->next = NULL;
+            res = tmp;
+            tmp_pre = tmp;
         }
         else
         {
-            if (q != NULL)
-            {
-                q->data = data;
-                q->next = NULL;
-            }
-            else
-                exit(1);
-            if (head0 != NULL)
-            {
-                p0->next = q;
-            }
-            else
-                head0 = q;
-            p0 = q;
+            tmp->data = input;
+            tmp->next = NULL;
+            tmp_pre->next = tmp;
+            tmp_pre = tmp;
         }
-        *L = (*L)->next;
     }
-    *L = head0;
-    return head1;
+    return res;
+}
+
+struct ListNode *getodd(struct ListNode **L)
+{ //return odd,L=even
+    struct ListNode *odd = NULL, *even = NULL, *piter = *L, *res;
+    *L = even, res = odd;
+    int is_end = 1;
+    while (is_end)
+    { //0-倒数第二个
+        if (!piter->next)
+            is_end--;
+
+        if (piter->data % 2 == 1)
+        {
+            if (!odd)
+            {
+                odd = piter;
+                res = piter;
+            }
+            else
+            {
+                odd->next = piter;
+                odd = piter;
+            }
+            piter = piter->next;
+            odd->next = NULL;
+        }
+        else
+        {
+            if (!even)
+            {
+                *L = piter;
+                even = piter;
+            }
+            else
+            {
+                even->next = piter;
+                even = piter;
+            }
+            piter = piter->next;
+            even->next = NULL;
+        }
+    }
+    //最后的节点
+    return res;
 }
 //test
 //1 2 2 3 4 5 6 7 -1
